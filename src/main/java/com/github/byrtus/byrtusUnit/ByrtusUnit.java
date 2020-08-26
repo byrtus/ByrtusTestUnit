@@ -298,4 +298,40 @@ public class ByrtusUnit {
                     "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
         }
     }
+
+    private void printStartMenuForDependsOnTesting() {
+        System.out.println("~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "     Start Tests withs Depends On\n" +
+                "~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n");
+
+        System.out.println("Root methods: " + this.rootsMethodsList.toString());
+        System.out.println("Tests with Depends On Annotation: " + this.dependsOnTestsStatus.keySet() + "\n");
+    }
+
+    private void printFinalTestsResultForDependsOnAnnotations(){
+        System.out.println("Finish Testing Test with Depends On Annotation:\n" +
+                "Tests with Depends On Status: " + this.dependsOnTestsStatus.toString() + "\n");
+    }
+
+    private void printMenuForNormalTests(){
+        System.out.println("\n~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "  Start Tests with out any Depends On\n" +
+                "~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n");
+    }
+
+    private void printFinishTestingMenu(){
+        System.out.println("       * * * * * * * * * *\n" +
+                "         Finish all test\n" +
+                "       * * * * * * * * * *\n");
+
+    }
+
+    private void printListOfMethodsDependsOnParentMethod(Method method, List<String> listOfDependsOnMethods){
+        System.out.println("List of Methods dependOn " + method.getAnnotation(Test.class).name() + " : " + listOfDependsOnMethods);
+    }
+
+    private void printMessageWhenNoDependsOnToTesting(){
+        System.out.println("There is nothing to Test in DependsOn Annotation");
+    }
+
 }
