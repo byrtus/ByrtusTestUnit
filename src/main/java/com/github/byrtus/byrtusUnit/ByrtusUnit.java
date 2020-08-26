@@ -16,6 +16,29 @@ public class ByrtusUnit {
 
     public void getMethodsFromClass(Class<?> thisClass) {
         Method[] methods = thisClass.getMethods();
+        this.methods = methods;
+
+        // set List and map with methods status
+        startSetMapWithTests(methods);
+        startSetRootMethodsList(methods);
+
+        //print menu
+        printStartMenuForDependsOnTesting();
+
+        // testing methods with DependsOn Annotation or connection to it
+        // stream filter for root methods
+        Arrays.stream(methods)
+                .filter(method -> Modifier.isPublic(method.getModifiers()))
+                .filter(method -> method.isAnnotationPresent(Test.class) && !method.isAnnotationPresent(DependsOn.class) && !method.getAnnotation(Test.class).name().equals(""))
+                .forEach(method -> startTestingDependsOn(method));
+
+        //print final depends on testing result
+        printFinalTestsResultForDependsOnAnnotations();
+
+        //print menu
+        printMenuForNormalTests();
+
+        // testing methods WITH OUT ANY DependsOn Annotation and it connection
         Arrays.stream(methods)
                 .filter(method -> Modifier.isPublic(method.getModifiers()))
                 .filter(method -> method.isAnnotationPresent(Test.class))
