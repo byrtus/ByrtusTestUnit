@@ -48,14 +48,28 @@ public class ByrtusUnit {
         // testing methods WITH OUT ANY DependsOn Annotation and it connection
         Arrays.stream(methods)
                 .filter(method -> Modifier.isPublic(method.getModifiers()))
-                .filter(method -> method.isAnnotationPresent(Test.class))
-                .forEach(ByrtusUnit :: startTesting);
+                .filter(method -> method.isAnnotationPresent(Test.class) && !method.isAnnotationPresent(DependsOn.class) && method.getAnnotation(Test.class).name().equals(""))
+                .forEach(ByrtusUnit::startTesting);
+
+        // print finish titles
+        printFinishTestingMenu();
     }
 
-    private static void startTesting (Method method){
+    public Method getMethodFromTestAnnotationFromItsName(Method[] methods, String testName) {
+        for (Method methode : methods) {
+            if (methode.isAnnotationPresent(Test.class)) {
+                if (methode.getAnnotation(Test.class).name().equals(testName)) {
+                    return methode;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void startTesting(Method method) {
         Throwable throwableException = null;
         Boolean isPassed = true;
-        try{
+        try {
             method.invoke(null);
         } catch (IllegalAccessException e) {
             isPassed = false;
