@@ -3,13 +3,20 @@ package com.github.byrtus.byrtusUnit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 
 public class ByrtusUnit {
 
+    HashMap<String, String> dependsOnTestsStatus = new HashMap<>();
+    ArrayList<String> rootsMethodsList = new ArrayList<>();
+    Method[] methods;
 
     public void getTestAnnotationClasses(Class<?>... classes) {
-        for (Class<?> thisClass: classes) {
+        for (Class<?> thisClass : classes) {
             getMethodsFromClass(thisClass);
         }
     }
